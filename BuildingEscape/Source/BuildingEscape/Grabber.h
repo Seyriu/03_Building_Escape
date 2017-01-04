@@ -5,7 +5,6 @@
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UGrabber : public UActorComponent
 {
@@ -14,17 +13,15 @@ class BUILDINGESCAPE_API UGrabber : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UGrabber();
-
 	// Called when the game starts
-	virtual void BeginPlay() override;
-	
+	virtual void BeginPlay() override;	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+	//Returns the coordinates of the point indicating where the grabbed items will be held
 
 private:
 	//how far ahead of the player can  cm.
 	float Reach = 100.f;
-
 	UPhysicsHandleComponent* PhysicsHandle=nullptr;
 	UInputComponent* InputComponent=nullptr;
 	//Ray-Cast and grab what's in reach
@@ -39,4 +36,8 @@ private:
 	void DrawReachDebugLine(FVector, FVector);
 	//Return hit for the first physics body in reach
 	const FHitResult GetFirstPhysicsBodyInReach();
+	//Returns current end of reach line
+	FVector GetReachLineStart();
+	//Returns current end of reach line
+	FVector GetReachLineEnd();
 };
