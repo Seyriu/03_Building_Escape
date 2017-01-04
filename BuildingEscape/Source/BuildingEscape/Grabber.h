@@ -29,5 +29,14 @@ private:
 	UInputComponent* InputComponent=nullptr;
 	//Ray-Cast and grab what's in reach
 	void Grab();
+	//Release what the pawn is holding
 	void Release();
+	//Find (assumed) attached physics handle
+	void FindPhysicsHandleComponent();
+	//Setup (assumed) attached input component (only appears at run time)
+	void SetupInputComponent();
+	//Draw a red trace in the world to visualize where the pawn can reach
+	void DrawReachDebugLine(FVector, FVector);
+	//Return hit for the first physics body in reach
+	const FHitResult GetFirstPhysicsBodyInReach();
 };
