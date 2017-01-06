@@ -22,14 +22,16 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 	//find the owning actor
 	Owner= GetOwner();
+	if (!PressurePlate) { UE_LOG(LogTemp, Warning, TEXT("Pressure Plate property value not entered in the OpenDoor component")); }
 }
 
 void UOpenDoor::OpenDoor()
 {	
 	//create a rotator
-	FRotator NewRotator = FRotator(0.0f, OpenAngle, 0.0f);
+	//FRotator NewRotator = FRotator(0.0f, OpenAngle, 0.0f);
 	//set the door rotation
-	Owner->SetActorRotation(NewRotator);
+	//Owner->SetActorRotation(NewRotator);
+	OnOpenRequest.Broadcast();
 }
 
 void UOpenDoor::CloseDoor()
@@ -62,6 +64,7 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 	float TotalMass = 0.f;
 	//Find all of the overlapping actors
 	TArray<AActor*> OverlappingActors;
+	if (!PressurePlate) { return TotalMass; }
 	PressurePlate->GetOverlappingActors(OUT OverlappingActors);
 	//iterate through them adding all their masses
 	for (const auto& OverlappingActor : OverlappingActors)

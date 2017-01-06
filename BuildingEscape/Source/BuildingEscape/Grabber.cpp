@@ -62,6 +62,8 @@ void UGrabber::Grab()
 	//if we hit something, attach physics handle
 	if (ActorHit) ///same as ActorHit != nullptr
 	{
+		///in case the PhysicsHandle component has not been assigned to the pawn, return. Error specified in FindPhysicsHandleComponent()
+		if (!PhysicsHandle) { return; }
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab,
 			NAME_None,//No bones needed
@@ -73,6 +75,8 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
+	///in case the PhysicsHandle component has not been assigned to the pawn, return. Error specified in FindPhysicsHandleComponent()
+	if (!PhysicsHandle) { return; }
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		PhysicsHandle->ReleaseComponent();
@@ -83,6 +87,8 @@ void UGrabber::Release()
 void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	///in case the PhysicsHandle component has not been assigned to the pawn, return. Error specified in FindPhysicsHandleComponent()
+	if (!PhysicsHandle) { return; }
 	///if the physics handle is attached 
 	if (PhysicsHandle->GrabbedComponent)
 	{
